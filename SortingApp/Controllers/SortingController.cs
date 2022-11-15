@@ -20,17 +20,15 @@ namespace SortingApp.Controllers
         [Route("bubble")]
         public IActionResult Bubble()
         {
-           var sortedArrays = new List<SortingDto>();
-           sortedArrays.Add(_sortingService.BubbleSort());
-           sortedArrays.Add(_sortingService.LinqSort());
-           sortedArrays.Add(_sortingService.QuickSort());
+          var sortingList = _sortingService.SortingList();
 
-          if (!sortedArrays.Any())
+          if (!sortingList.Any())
             {
                 return NotFound();
             }
 
-            return Ok(new { sortedArrays });
+            return Ok(new { sortingList });
         }
+
     }
 }

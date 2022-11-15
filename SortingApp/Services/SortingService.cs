@@ -10,27 +10,67 @@ namespace SortingApp.Services
 
         public SortingService(IConfiguration configuration)
         {
-            _configuration = configuration;
-           var watch = new System.Diagnostics.Stopwatch();
+           _configuration = configuration;
         }
 
-        public SortingDto BubbleSort()
+        public List<SortingDto> SortingList()
         {
-            int temp;
-            var textFile = GetTextFile();
-            if (textFile == null)
-            {
-                throw new FileNotFoundException();
-            }
-            string[] lines = File.ReadAllLines(textFile);
-            int[] numbers = new int[] {};
-            for(int i=0; i<lines.Length; i++)
-            {
-                numbers = lines[i].Split(',').Select(int.Parse).ToArray();
-            }
+            var sortingList = new List<SortingDto>();
+            int[] numberArray = { 6, 8, 1, 5, 4, 12, 3, 34 };
 
+            sortingList.Add(BubbleSort(numberArray));
+            sortingList.Add(ArraySort(numberArray));
+            sortingList.Add(QuickSort(numberArray));
+
+            string sortedArray = string.Join(",", sortingList.First().SortedArray);
+            var savePath = SaveTextFile();
+            File.WriteAllText(savePath, sortedArray);
+
+            return sortingList;
+        }
+
+        private SortingDto BubbleSort(int[] numbers)
+        {
             var sortingDto = new SortingDto();
             watch.Start();
+            BubbleSortAlgo(numbers);
+            watch.Stop();
+            sortingDto.SortedArray = numbers;
+            sortingDto.SortingPerfomance = watch.Elapsed;
+            sortingDto.SortingAlgorithm = "Bubble";
+
+            return sortingDto;
+        }
+
+        private SortingDto ArraySort(int[] numbers)
+        {
+            var sortingDto = new SortingDto();
+            watch.Start();
+            Array.Sort(numbers);
+            watch.Stop();
+            sortingDto.SortedArray = numbers;
+            sortingDto.SortingPerfomance = watch.Elapsed;
+            sortingDto.SortingAlgorithm = "Linq";
+
+            return sortingDto;
+        }
+
+        private SortingDto QuickSort(int[] numbers)
+        { 
+            var sortingDto = new SortingDto();
+            watch.Start();
+            QuickSortAlgo(numbers, 0, numbers.Length-1);
+            watch.Stop();
+            sortingDto.SortedArray = numbers;
+            sortingDto.SortingPerfomance = watch.Elapsed;
+            sortingDto.SortingAlgorithm = "Quick sort";
+
+            return sortingDto;
+        }
+
+        private void BubbleSortAlgo(int[] numbers)
+        {
+            int temp;
             for (int j = 0; j <= numbers.Length - 2; j++)
             {
                 for (int i = 0; i <= numbers.Length - 2; i++)
@@ -43,67 +83,9 @@ namespace SortingApp.Services
                     }
                 }
             }
-            watch.Stop();
-            sortingDto.SortedArray = numbers;
-            sortingDto.SortingPerfomance = watch.Elapsed;
-            sortingDto.SortingAlgorithm = "Bubble";
-
-            return sortingDto;
         }
 
-        public SortingDto LinqSort()
-        {
-            var textFile = GetTextFile();
-            if (textFile == null)
-            {
-                return null;
-            }
-            string[] lines = File.ReadAllLines(textFile);
-            int[] numbers = new int[] { };
-            for (int i = 0; i < lines.Length; i++)
-            {
-                numbers = lines[i].Split(',').Select(int.Parse).ToArray();
-            }
-
-            var sortingDto = new SortingDto();
-            watch.Start();
-            Array.Sort(numbers);
-            watch.Stop();
-            sortingDto.SortedArray = numbers;
-            sortingDto.SortingPerfomance = watch.Elapsed;
-            sortingDto.SortingAlgorithm = "Linq";
-
-            return sortingDto;
-        }
-
-        public SortingDto QuickSort()
-        {
-            var textFile = GetTextFile();
-            if (textFile == null)
-            {
-                throw new FileNotFoundException();
-            }
-            string[] lines = File.ReadAllLines(textFile);
-            int[] numbers = new int[] { };
-
-       
-            for (int i = 0; i < lines.Length; i++)
-            {
-                numbers = lines[i].Split(',').Select(int.Parse).ToArray();
-            }
-
-            var sortingDto = new SortingDto();
-            watch.Start();
-            QuickSort(numbers, 0, numbers.Length-1);
-            watch.Stop();
-            sortingDto.SortedArray = numbers;
-            sortingDto.SortingPerfomance = watch.Elapsed;
-            sortingDto.SortingAlgorithm = "Quick sort";
-
-            return sortingDto;
-        }
-
-        private void QuickSort(int[] arr, int left, int right)
+        private void QuickSortAlgo(int[] arr, int left, int right)
         {
             if (left < right)
             {
@@ -111,11 +93,11 @@ namespace SortingApp.Services
 
                 if (pivot > 1)
                 {
-                    QuickSort(arr, left, pivot - 1);
+                    QuickSortAlgo(arr, left, pivot - 1);
                 }
                 if (pivot + 1 < right)
                 {
-                    QuickSort(arr, pivot + 1, right);
+                    QuickSortAlgo(arr, pivot + 1, right);
                 }
             }
         }
@@ -153,7 +135,7 @@ namespace SortingApp.Services
             }
         }
 
-        private string GetTextFile()
+        private string SaveTextFile()
         {
             return _configuration.GetValue<string>("FileLocation:Path") ?? null;
         }

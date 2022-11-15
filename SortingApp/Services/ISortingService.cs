@@ -4,8 +4,6 @@ namespace SortingApp.Services
 {
     public interface ISortingService
     {
-        SortingDto BubbleSort();
-        SortingDto LinqSort();
-        SortingDto QuickSort();
+        List<SortingDto> SortingList();
     }
 }
