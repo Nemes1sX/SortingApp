@@ -2,8 +2,8 @@
 {
     public class SortingDto
     {
-        public int[] SortedArray { get; set; } 
+        public int[]? SortedArray { get; set; } 
         public TimeSpan SortingPerfomance { get; set; }
-        public string SortingAlgorithm { get; set; }
+        public string? SortingAlgorithm { get; set; }
     }
 }
