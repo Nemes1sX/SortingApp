@@ -1,4 +1,5 @@
-﻿using SortingApp.Models.Dtos;
+﻿using SortingApp.Helpers;
+using SortingApp.Models.Dtos;
 using System.Diagnostics;
 
 namespace SortingApp.Services
@@ -33,7 +34,7 @@ namespace SortingApp.Services
         {
             var sortingDto = new SortingDto();
             watch.Start();
-            BubbleSortAlgo(numbers);
+            SortingAlgo.BubbleSortAlgo(numbers);
             watch.Stop();
             sortingDto.SortedArray = numbers;
             sortingDto.SortingPerfomance = watch.Elapsed;
@@ -59,7 +60,7 @@ namespace SortingApp.Services
         { 
             var sortingDto = new SortingDto();
             watch.Start();
-            QuickSortAlgo(numbers, 0, numbers.Length-1);
+            SortingAlgo.QuickSortAlgo(numbers, 0, numbers.Length-1);
             watch.Stop();
             sortingDto.SortedArray = numbers;
             sortingDto.SortingPerfomance = watch.Elapsed;
@@ -68,7 +69,7 @@ namespace SortingApp.Services
             return sortingDto;
         }
 
-        private void BubbleSortAlgo(int[] numbers)
+       /* private void BubbleSortAlgo(int[] numbers)
         {
             int temp;
             for (int j = 0; j <= numbers.Length - 2; j++)
@@ -133,7 +134,7 @@ namespace SortingApp.Services
                     return right;
                 }
             }
-        }
+        }*/
 
         private string SaveTextFile()
         {
