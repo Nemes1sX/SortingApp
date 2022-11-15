@@ -4,7 +4,7 @@ namespace SortingApp.Services
 {
     public interface ISortingService
     {
-        Task<List<SortingDto>> SortingList(int[] numberArray);
-        Task<string[]> LoadSortedArray();
+        Task<List<SortingDto>> SortingListAsync(int[] numberArray);
+        Task<string[]> LoadSortedArrayAsync();
     }
 }

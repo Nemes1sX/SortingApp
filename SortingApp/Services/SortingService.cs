@@ -14,7 +14,7 @@ namespace SortingApp.Services
            _configuration = configuration;
         }
 
-        public async Task<List<SortingDto>> SortingList(int[] numberArray)
+        public async Task<List<SortingDto>> SortingListAsync(int[] numberArray)
         {
             var sortingList = new List<SortingDto>();
 
@@ -29,7 +29,7 @@ namespace SortingApp.Services
             return sortingList;
         }
 
-        public async Task<string[]> LoadSortedArray()
+        public async Task<string[]> LoadSortedArrayAsync()
         {
             var loadPath = SaveTextFile();
             if (loadPath == null)
