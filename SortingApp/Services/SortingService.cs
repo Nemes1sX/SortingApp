@@ -14,10 +14,9 @@ namespace SortingApp.Services
            _configuration = configuration;
         }
 
-        public List<SortingDto> SortingList()
+        public async Task<List<SortingDto>> SortingList(int[] numberArray)
         {
             var sortingList = new List<SortingDto>();
-            int[] numberArray = { 6, 8, 1, 5, 4, 12, 3, 34 };
 
             sortingList.Add(BubbleSort(numberArray));
             sortingList.Add(ArraySort(numberArray));
@@ -25,9 +24,20 @@ namespace SortingApp.Services
 
             string sortedArray = string.Join(",", sortingList.First().SortedArray);
             var savePath = SaveTextFile();
-            File.WriteAllText(savePath, sortedArray);
+            await File.WriteAllTextAsync(savePath, sortedArray);
 
             return sortingList;
+        }
+
+        public async Task<string[]> LoadSortedArray()
+        {
+            var loadPath = SaveTextFile();
+            if (loadPath == null)
+            {
+                throw new FileNotFoundException();
+            }
+            string[] lines = await File.ReadAllLinesAsync(loadPath);
+            return lines;
         }
 
         private SortingDto BubbleSort(int[] numbers)
@@ -73,5 +83,6 @@ namespace SortingApp.Services
         {
             return _configuration.GetValue<string>("FileLocation:Path") ?? null;
         }
+
     }
 }

@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SortingApp.Models.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
 using SortingApp.Services;
-using System.Linq.Expressions;
 
 namespace SortingApp.Controllers
 {
@@ -17,10 +14,11 @@ namespace SortingApp.Controllers
         }
 
         [HttpGet]
-        [Route("bubble")]
-        public IActionResult Bubble()
+        [Route("sort")]
+        public async Task<IActionResult> Bubble()
         {
-          var sortingList = _sortingService.SortingList();
+            int[] numberArray = { 6, 8, 1, 5, 4, 12, 3, 34 };
+            var sortingList = await _sortingService.SortingListAsync(numberArray);
 
           if (!sortingList.Any())
             {
@@ -30,5 +28,17 @@ namespace SortingApp.Controllers
             return Ok(new { sortingList });
         }
 
+        [HttpGet]
+        [Route("load")]
+        public async Task<IActionResult> Load()
+        {
+            var loadedArrayText = await _sortingService.LoadSortedArrayAsync();
+            if(loadedArrayText.Length == 0 || loadedArrayText == null)
+            {
+                return NotFound(new {message = "Not found"});
+            }
+
+            return Ok(new { array = loadedArrayText });
+        }
     }
 }
