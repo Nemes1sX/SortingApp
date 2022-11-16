@@ -13,11 +13,11 @@ namespace SortingApp.Controllers
             _sortingService = sortingService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("sort")]
-        public async Task<IActionResult> Bubble(string inputArray)
+        public async Task<IActionResult> SortArray([FromBody] string inputArray)
         {
-            int[] numberArray = inputArray.Split(",").Select(int.Parse).ToArray();
+            var numberArray = inputArray.Split(",").Select(int.Parse).ToArray();
             var sortingList = await _sortingService.SortingListAsync(numberArray);
 
           if (!sortingList.Any())
