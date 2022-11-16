@@ -15,9 +15,9 @@ namespace SortingApp.Controllers
 
         [HttpGet]
         [Route("sort")]
-        public async Task<IActionResult> Bubble()
+        public async Task<IActionResult> Bubble(string inputArray)
         {
-            int[] numberArray = { 6, 8, 1, 5, 4, 12, 3, 34 };
+            int[] numberArray = inputArray.Split(",").Select(int.Parse).ToArray();
             var sortingList = await _sortingService.SortingListAsync(numberArray);
 
           if (!sortingList.Any())

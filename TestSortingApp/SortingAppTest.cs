@@ -31,19 +31,19 @@ namespace TestSortingApp
             int[] expectedArray = {3, 4, 5, 6, 9, 11, 12, 15, 32};
 
             //Arrange
-            var sortingList = await sortingService.SortingList(initialArray);
+            var sortingList = await sortingService.SortingListAsync(initialArray);
 
             //Assert
             foreach(var sorting in sortingList)
             {
-                CollectionAssert.AreEqual(sorting.SortedArray, expectedArray);
+                Assert.IsTrue(sorting.SortedArray.SequenceEqual(expectedArray));
             }
         }
 
         [Test]
         public async Task test_sortingSerivce_loadSucessfullyFile()
         {
-            var loadedArrayText = await sortingService.LoadSortedArray();
+            var loadedArrayText = await sortingService.LoadSortedArrayAsync();
             Assert.AreEqual(loadedArrayText.Length, 1);        
         }
 
@@ -51,9 +51,9 @@ namespace TestSortingApp
         public async Task test_sortingSerivce_loadFileNotFound()
         {
             var _sortingServiceMock = Substitute.For<ISortingService>();
-            _sortingServiceMock.When(x => x.LoadSortedArray()).Do(x => { throw new FileNotFoundException(); });
+            _sortingServiceMock.When(x => x.LoadSortedArrayAsync()).Do(x => { throw new FileNotFoundException(); });
 
-             Assert.ThrowsAsync<FileNotFoundException>(() => _sortingServiceMock.LoadSortedArray());
+             Assert.ThrowsAsync<FileNotFoundException>(() => _sortingServiceMock.LoadSortedArrayAsync());
         }
     }
 }
