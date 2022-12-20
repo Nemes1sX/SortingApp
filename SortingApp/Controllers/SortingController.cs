@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SortingApp.Models.FormRequest.CustomRules;
 using SortingApp.Services;
 using System.ComponentModel.DataAnnotations;
-using SortingApp.Models.CustomRules;
 
 namespace SortingApp.Controllers
 {
