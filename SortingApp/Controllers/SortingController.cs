@@ -15,12 +15,11 @@ namespace SortingApp.Controllers
 
         [HttpPost]
         [Route("sort")]
-        public async Task<IActionResult> SortArray([FromBody] string inputArray)
+        public async Task<IActionResult> SortArray([FromBody] int[] inputArray)
         {
-            var numberArray = inputArray.Split(",").Select(int.Parse).ToArray();
-            var sortingList = await _sortingService.SortingListAsync(numberArray);
+            var sortingList = await _sortingService.SortingListAsync(inputArray);
 
-          if (!sortingList.Any())
+            if (!sortingList.Any())
             {
                 return NotFound();
             }

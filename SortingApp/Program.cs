@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 var services = builder.Services;
 var env = builder.Environment;
 
-services.AddTransient<ISortingService, SortingService>();
+services.AddScoped<ISortingService, SortingService>();
 
 var app = builder.Build();
 

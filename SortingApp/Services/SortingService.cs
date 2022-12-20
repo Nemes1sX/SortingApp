@@ -18,9 +18,9 @@ namespace SortingApp.Services
         {
             var sortingList = new List<SortingDto>();
 
-            sortingList.Add(BubbleSort(numberArray));
-            sortingList.Add(ArraySort(numberArray));
-            sortingList.Add(QuickSort(numberArray));
+           sortingList.Add(BubbleSort(numberArray));
+           sortingList.Add(ArraySort(numberArray));
+           sortingList.Add(QuickSort(numberArray));
 
             string sortedArray = string.Join(",", sortingList.First().SortedArray);
             var savePath = SaveTextFile();
@@ -49,7 +49,7 @@ namespace SortingApp.Services
             sortingDto.SortedArray = numbers;
             sortingDto.SortingPerfomance = watch.Elapsed;
             sortingDto.SortingAlgorithm = "Bubble";
-
+            watch.Reset();
             return sortingDto;
         }
 
@@ -62,6 +62,7 @@ namespace SortingApp.Services
             sortingDto.SortedArray = numbers;
             sortingDto.SortingPerfomance = watch.Elapsed;
             sortingDto.SortingAlgorithm = "Linq";
+            watch.Reset();
 
             return sortingDto;
         }
@@ -75,6 +76,7 @@ namespace SortingApp.Services
             sortingDto.SortedArray = numbers;
             sortingDto.SortingPerfomance = watch.Elapsed;
             sortingDto.SortingAlgorithm = "Quick sort";
+            watch.Reset();
 
             return sortingDto;
         }
