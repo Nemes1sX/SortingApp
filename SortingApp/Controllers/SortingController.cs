@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SortingApp.Services;
+using System.ComponentModel.DataAnnotations;
+using SortingApp.Models.CustomRules;
 
 namespace SortingApp.Controllers
 {
@@ -15,7 +17,7 @@ namespace SortingApp.Controllers
 
         [HttpPost]
         [Route("sort")]
-        public async Task<IActionResult> SortArray([FromBody] int[] inputArray)
+        public async Task<IActionResult> SortArray([FromBody][Required][TwoInteger] int[] inputArray)
         {
             var sortingList = await _sortingService.SortingListAsync(inputArray);
 

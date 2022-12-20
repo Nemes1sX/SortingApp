@@ -23,8 +23,9 @@ namespace TestSortingApp
             sortingService = new SortingService(configuration);
         }
 
+
         [Test]
-        public async Task tett_sortingService_successfullSorting()
+        public async Task Test_SortingService_successfullSorting()
         {
             //Act
             int[] initialArray = { 6, 3, 12, 4, 15, 9, 5, 32, 11 };
@@ -40,20 +41,12 @@ namespace TestSortingApp
             }
         }
 
+
         [Test]
-        public async Task test_sortingSerivce_loadSucessfullyFile()
+        public async Task Test_SortingSerivce_loadSucessfullyFile()
         {
             var loadedArrayText = await sortingService.LoadSortedArrayAsync();
-            Assert.AreEqual(loadedArrayText.Length, 1);        
-        }
-
-        [Test]
-        public async Task test_sortingSerivce_loadFileNotFound()
-        {
-            var _sortingServiceMock = Substitute.For<ISortingService>();
-            _sortingServiceMock.When(x => x.LoadSortedArrayAsync()).Do(x => { throw new FileNotFoundException(); });
-
-             Assert.ThrowsAsync<FileNotFoundException>(() => _sortingServiceMock.LoadSortedArrayAsync());
+            Assert.AreEqual(loadedArrayText.Length, 1);
         }
     }
 }
